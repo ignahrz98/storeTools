@@ -1,3 +1,4 @@
+import json
 from menuApp import mainMenuApp
 from menuApp import currencyConverterMenu
 from currencyConverter import currencyConverterTool
@@ -5,15 +6,26 @@ from calcularPorcentajes import calcularPorcentajesTool
 from digitalWeight import digitalWeightTool
 from dolarValue import dolarValueTool
 
-print("\nPara iniciar la aplicación, ingrese tasa cambiaria ($1)")
+# Get the dolarValue from the file.
+try:
+	with open("data/dolar_value.json", "r") as file_dolar_value:
+		datos = json.load(file_dolar_value)
+		dolarValue = datos["dolar_value"]
 
-while True:
-	try:
-		dolarValue = float(input("\nIngrese el valor del dolar en su moneda: "))
-		break
-	except:
-		input("\nEl valor ingresado es inválido. Ingrese solamente números.")
+		print("Valor del dólar cargado desde el archivo.")
+except:
+	datos = {
+		"dolar_value": 0.0
+	}
 
+	# Create file for dolar_value
+	with open("data/dolar_value.json", "w") as file_dolar_value:
+		json.dump(datos, file_dolar_value, indent=4)
+		print("El archivo para valor del dólar ha sido creado")
+
+	dolarValue = datos["dolar_value"]
+
+# Show the main menu.
 while True:
 	option = mainMenuApp.getMenu(dolarValue)
 
