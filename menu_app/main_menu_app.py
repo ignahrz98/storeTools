@@ -1,9 +1,9 @@
-def getMenu(dolarValue):
+def get_menu(dolar_value):
 	while True:
 		print("\n** MENU PRINCIPAL **")
-		print(f"\nValor del dolar ($1): {dolarValue:.2f}")
+		print(f"\nValor del dolar ($1): {dolar_value:.2f}")
 		print("\n1. Conversor de moneda.")
-		print("2. Calcular porcentajes.")
+		print("2. Calcular ganancia.")
 		print("3. Peso digital.")
 		print("4. Cambiar valor del dolar.")
 		print("5. Salir.")

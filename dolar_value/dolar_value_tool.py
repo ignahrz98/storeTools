@@ -1,6 +1,6 @@
 import json
 
-def setTool(dolar_value):
+def set_tool(dolar_value):
 	print("\n* Cambiar valor del dólar *")
 	print(f"\n| Valor actual | $1.00 | {dolar_value:.2f} |")
 
@@ -15,12 +15,12 @@ def setTool(dolar_value):
 	input("\nPresione para continuar.")
 
 	# Save dolar_value to the file.
-	datos = {
+	data = {
 		"dolar_value": new_dolar_value
 	}
 
 	with open("data/dolar_value.json", "w") as file_dolar_value:
-		json.dump(datos, file_dolar_value, indent=4)
+		json.dump(data, file_dolar_value, indent=4)
 		print("\nEl nuevo valor del dólar fue actualizado en el archivo.")
 
 	return new_dolar_value

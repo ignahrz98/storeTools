@@ -1,46 +1,46 @@
 import json
-from menuApp import mainMenuApp
-from menuApp import currencyConverterMenu
-from currencyConverter import currencyConverterTool
-from calcularPorcentajes import calcularPorcentajesTool
-from digitalWeight import digitalWeightTool
-from dolarValue import dolarValueTool
+from menu_app import main_menu_app
+from menu_app import currency_converter_menu
+from currency_converter import currency_converter_tool
+from calculate_earning import calculate_earning_tool
+from digital_weight import digital_weight_tool
+from dolar_value import dolar_value_tool
 
-# Get the dolarValue from the file.
+# Get the dolar_value from the file.
 try:
 	with open("data/dolar_value.json", "r") as file_dolar_value:
-		datos = json.load(file_dolar_value)
-		dolarValue = datos["dolar_value"]
+		data = json.load(file_dolar_value)
+		dolar_value = data["dolar_value"]
 
 		print("Valor del dólar cargado desde el archivo.")
 except:
-	datos = {
+	data = {
 		"dolar_value": 0.0
 	}
 
 	# Create file for dolar_value
 	with open("data/dolar_value.json", "w") as file_dolar_value:
-		json.dump(datos, file_dolar_value, indent=4)
+		json.dump(data, file_dolar_value, indent=4)
 		print("El archivo para valor del dólar ha sido creado")
 
-	dolarValue = datos["dolar_value"]
+	dolar_value = data["dolar_value"]
 
 # Show the main menu.
 while True:
-	option = mainMenuApp.getMenu(dolarValue)
+	option = main_menu_app.get_menu(dolar_value)
 
 	if option == 1:
-		optionCurrencyConverterMenu = currencyConverterMenu.getMenu()
+		option_currency_converter_menu = currency_converter_menu.get_menu()
 
-		if optionCurrencyConverterMenu == 1:
-			currencyConverterTool.setTool(dolarValue,1)
-		elif optionCurrencyConverterMenu == 2:
-			currencyConverterTool.setTool(dolarValue,2)
+		if option_currency_converter_menu == 1:
+			currency_converter_tool.set_tool(dolar_value,1)
+		elif option_currency_converter_menu == 2:
+			currency_converter_tool.set_tool(dolar_value,2)
 	elif option == 2:
-		calcularPorcentajesTool.setTool(dolarValue)
+		calculate_earning_tool.set_tool(dolar_value)
 	elif option == 3:
-		digitalWeightTool.setTool()
+		digital_weight_tool.set_tool()
 	elif option == 4:
-		dolarValue = dolarValueTool.setTool(dolarValue)
+		dolar_value = dolar_value_tool.set_tool(dolar_value)
 	elif option == 5:
 		break

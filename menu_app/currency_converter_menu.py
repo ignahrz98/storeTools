@@ -1,8 +1,8 @@
-def getMenu():
+def get_menu():
 	while True:
 		print("\n* Conversor de moneda *")
-		print("\n1. Convertir de dolares a su moneda.")
-		print("2. Convertir de su moneda a dolares.")
+		print("\n1. Convertir de dolares a su moneda local.")
+		print("2. Convertir de su moneda local a dolares.")
 		print("3. Volver al menú principal.")
 
 		while True:
