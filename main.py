@@ -1,4 +1,5 @@
 import json
+import requests
 from menu_app import main_menu_app
 from menu_app import currency_converter_menu
 from currency_converter import currency_converter_tool
@@ -7,6 +8,7 @@ from digital_weight import digital_weight_tool
 from dolar_value import dolar_value_tool
 
 import tkinter as tk
+from tkinter import messagebox
 
 window = tk.Tk()
 window.title("Store tools")
@@ -45,9 +47,36 @@ except:
 
 	dolar_value = data["dolar_value"]
 
-text_variable_dolar_value = tk.StringVar(value=f"Dollar ($1): {dolar_value}")
+text_variable_dolar_value = tk.StringVar(value=f"{dolar_value}")
+"""
 label_dolar_value = tk.Label(textvariable=text_variable_dolar_value)
 label_dolar_value.pack()
+"""
+try:
+	url = "https://ve.dolarapi.com/v1/dolares/oficial"
+	response = requests.get(url)
+	data = response.json()
+	print("Dollar value loaded from API")
+	messagebox.showinfo(message="Official Exchange Rate updated")
+except:
+	print("Error loading dollar from API")
+	messagebox.showerror(message="Official Exchange Rate can't be updated")
+
+label_title_exchange_rate = tk.Label(window, text="Dollar - Exchange Rate", font=("TkDefaultFont",16, "bold"))
+label_title_exchange_rate.pack(pady=(0,10))
+
+frame_exchange_rates = tk.Frame(window, relief=tk.RAISED, borderwidth=4)
+frame_exchange_rates.pack()
+label_title_custom_exchange_rate = tk.Label(frame_exchange_rates, text="Custom", font=("TkDefaultFont",10, "bold"))
+label_title_custom_exchange_rate.grid(row=0, column=0, padx=60)
+custom_exchange_rate = tk.Label(frame_exchange_rates, textvariable=text_variable_dolar_value, font=(14))
+custom_exchange_rate.grid(row=1, column=0)
+label_title_official_exchange_rate = tk.Label(frame_exchange_rates, text="Official", font=("TkDefaultFont",10, "bold"))
+label_title_official_exchange_rate.grid(row=0, column=1)
+official_exchange_rate = tk.Label(frame_exchange_rates, text=f"{data.get('promedio')}", font=(14))
+official_exchange_rate.grid(row=1, column=1)
+official_exchange_rate_date = tk.Label(frame_exchange_rates, text=f"{data.get('fechaActualizacion')}")
+official_exchange_rate_date.grid(row=2, column=1)
 
 # Show the main menu.
 """

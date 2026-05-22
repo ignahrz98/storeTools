@@ -46,7 +46,7 @@ def tool_action(text_variable_dolar_value):
 			print("Dolar value updated")
 			label_message.config(text="Dollar has been updated", fg="#135821")
 
-			text_variable_dolar_value.set(f"Dollar ($1): {dolar_value_update}")
+			text_variable_dolar_value.set(f"{dolar_value_update}")
 	except ValueError:
 		print("Value for dolar is not valid")
 		label_message.config(text="Dollar value is not valid", fg="#4B0404")
