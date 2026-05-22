@@ -21,14 +21,15 @@ import json
 
 entry_amount = None
 combobox_select_operation = None
+combobox_select_exchange_rate = None
 label_result = None
 
-def tool_action(dolar_value_current):
+def tool_action(dolar_value_current, official_exchange_rate):
 	everything_is_ok = True
 	amount_dolar = 0
 	amount_other_currency = 0
 	amount = 1.0
-	print(f"$1 = {dolar_value_current}")
+	#print(f"$1 = {dolar_value_current}")
 
 	try:
 		amount = float(entry_amount.get())
@@ -38,15 +39,29 @@ def tool_action(dolar_value_current):
 		everything_is_ok = False
 
 	operation_selected = combobox_select_operation.current()
-	
+	exchange_rate_selected = combobox_select_exchange_rate.current()
+	print(exchange_rate_selected)
+
+	# First, to configure exchange rate to use (Custom or Official)
+	exchange_rate_to_use = None
+	if exchange_rate_selected == 0:
+		print("Custom Exchange Rate")
+		exchange_rate_to_use = dolar_value_current
+	elif exchange_rate_selected == 1:
+		print("Official Exchange Rate")
+		exchange_rate_to_use = official_exchange_rate
+	else:
+		everything_is_ok = False
+
+
 	if operation_selected == 0:
 		print("Convert from dolar selected")
 		amount_dolar = amount
-		amount_other_currency = amount_dolar * dolar_value_current
+		amount_other_currency = amount_dolar * exchange_rate_to_use
 	elif operation_selected == 1:
 		print("Convert to dolar selected")
 		amount_other_currency = amount
-		amount_dolar = amount_other_currency / dolar_value_current
+		amount_dolar = amount_other_currency / exchange_rate_to_use
 	else:
 		everything_is_ok = False
 
@@ -55,7 +70,7 @@ def tool_action(dolar_value_current):
 	else:
 		label_result.config(text="")
 
-def toplevel_currency_converter(window_parent):
+def toplevel_currency_converter(window_parent, official_exchange_rate):
 	tl_window = tk.Toplevel(window_parent)
 	tl_window.title("Tool")
 	tl_window.geometry("400x300")
@@ -78,8 +93,19 @@ def toplevel_currency_converter(window_parent):
 	label_title = tk.Label(tl_window, text="Currency converter", font=("TkDefaultFont",10, "bold"))
 	label_title.pack(pady=(0,10))
 
+	label_select_exchange_rate = tk.Label(tl_window, text="Select Exchange Rate")
+	label_select_exchange_rate.pack()
+	
+	global combobox_select_exchange_rate
+	combobox_select_exchange_rate = ttk.Combobox(tl_window, state="readonly")
+	combobox_select_exchange_rate.pack()
+	elements_combobox_select_rate = ["Custom", "Official"]
+	combobox_select_exchange_rate["values"] = elements_combobox_select_rate
+
 	label_select_operation = tk.Label(tl_window, text="Select operation")
 	label_select_operation.pack()
+
+	print(f"Official Exchange Rate: {official_exchange_rate}")
 
 	global combobox_select_operation
 	combobox_select_operation = ttk.Combobox(tl_window, state="readonly")
@@ -96,7 +122,7 @@ def toplevel_currency_converter(window_parent):
 
 	btn_ok = tk.Button(tl_window, text="Ok")
 	btn_ok.pack(pady=10)
-	btn_ok.config(command=lambda: tool_action(dolar_value_current))
+	btn_ok.config(command=lambda: tool_action(dolar_value_current, official_exchange_rate))
 
 	global label_result
 	label_result = tk.Label(tl_window, text="", font=(10))
