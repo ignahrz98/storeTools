@@ -6,9 +6,21 @@ from currency_converter import currency_converter_tool
 from calculate_earning import calculate_earning_tool
 from digital_weight import digital_weight_tool
 from dolar_value import dolar_value_tool
+from tkcalendar import DateEntry
 
 import tkinter as tk
 from tkinter import messagebox
+
+def history_exchange_rate():
+	date = cal.get()
+	url = f"https://ve.dolarapi.com/v1/historicos/dolares/oficial/{date}"
+
+	response = requests.get(url)
+	data = response.json()
+
+	print(f"({date}): {data.get('promedio')} bs")
+	label_history_date.config(text=f"({date}): {data.get('promedio')} bs")
+
 
 window = tk.Tk()
 window.title("Store tools")
@@ -77,6 +89,23 @@ official_exchange_rate = tk.Label(frame_exchange_rates, text=f"{data.get('promed
 official_exchange_rate.grid(row=1, column=1)
 official_exchange_rate_date = tk.Label(frame_exchange_rates, text=f"{data.get('fechaActualizacion')}")
 official_exchange_rate_date.grid(row=2, column=1)
+
+label_history = tk.Label(window, text="Introduce date of exchange rate", font=("TkDefaultFont",16, "bold"))
+label_history.pack()
+
+cal = DateEntry(
+	window,
+	width=12,
+	borderwidth=2,
+	date_pattern='yyyy/mm/dd'
+)
+cal.pack()
+
+btn_history = tk.Button(window, command=history_exchange_rate, text="Date")
+btn_history.pack(pady=(10,0))
+
+label_history_date = tk.Label(window, font=(14))
+label_history_date.pack(pady=10)
 
 # Show the main menu.
 """
