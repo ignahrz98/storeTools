@@ -20,6 +20,4 @@ This application provides the following functionalities:
 
 1. Clone the repository: `git clone https://github.com/ignahrz98/store_tools.git`
 2. Navigate to the project directory: `cd store_tools`
-3. Run the application: `python main.py`# store_tools
-
-`store_tools` is a small Python GUI application designed to assist with the management of a small business.
+3. Run the application: `python main.py`
